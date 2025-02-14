@@ -5,7 +5,7 @@ class Snake:
 
     SEED : int = 31415926535897932384
     ATTRIBUTE_RESTRICTION : int = 200
-    MATRIX_SIZE : tuple[int, int] = (40, 30)
+    MATRIX_SIZE : tuple[int, int] = (120, 90)
 
     @staticmethod
     def matrix_size() -> tuple[int, int]:
@@ -57,7 +57,7 @@ class Snake:
         return self.length > 0
 
     @final # We'll fire you if you override this method.
-    def move(self, direction : list) -> list:
+    def move(self, direction : list) -> bool:
         """
         Move the snake in a specified direction. return False if the snake is disqualified or dead.
 
@@ -65,7 +65,7 @@ class Snake:
         :return: True if the move is successful, False otherwise.
         """
         if not self.qualification or self.isDead():
-            return None
+            return False
 
         head_x, head_y, hp = self.body_positions[0]
         new_head = (head_x + direction[0], head_y + direction[1], hp)
@@ -75,12 +75,12 @@ class Snake:
             del self.body_positions[0]
 
             if not self.qualification or self.isDead():
-                return None
+                return False
 
         # Insert the new head and remove the last segment if the length remains the same
         self.body_positions = [new_head] + self.body_positions[:self.length - 1]
 
-        return direction
+        return True
 
     @final # We'll fire you if you override this method.
     def grow(self) -> None:
@@ -115,11 +115,11 @@ class Snake:
 
     @final # We'll fire you if you override this method.
     def check_body(self) -> None:
-        for i in range(1, len(self.body_positions)):
+        for i in range(1, self.length):
             x, y, hp = self.body_positions[i]
             if hp < 1:
                 self.body_positions = self.body_positions[:i]
-                self.length = i
+                self.length = self.length - i
                 break
 
     @final # We'll fire you if you override this method.
