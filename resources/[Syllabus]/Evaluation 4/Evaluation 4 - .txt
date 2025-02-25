@@ -1,0 +1,14 @@
+# Student:
+# Total Grade:  / 100
+
+# ICS4UquadraticClass.py
+## Grade:  / 35
+
+# ICS4UfractionQuiz.py
+## Grade:  / 35
+
+# Q3 : ICS4UdiceGameObjects.py
+## Grade:  / 20
+
+# Q3 : Experiment
+## Grade:  / 10

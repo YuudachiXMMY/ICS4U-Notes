@@ -1,0 +1,14 @@
+# Student:
+# Total Grade:  / 100
+
+# ICS4UFrequencySearch.py
+## Grade:  / 40
+
+# Q2 : Python File
+## Grade:  / 30
+
+# Q2 : Three Graphs
+## Grade:  / 10
+
+# Q2 : Explanations
+## Grade:  / 20
