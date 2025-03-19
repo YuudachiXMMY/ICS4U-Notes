@@ -27,11 +27,11 @@ class Snake:
         """
         random.seed(Snake.SEED)
 
+        self.body_positions : list[tuple[int, int, int]] = []
         if length + attack + hp > Snake.ATTRIBUTE_RESTRICTION:
-            self.body_positions : tuple[int, int, int] = []
             self.length : int = 0
         else:
-            self.body_positions : tuple[int, int, int] = [(start_x, start_y, hp)]
+            self.body_positions = [(start_x, start_y, hp)]
             self.length : int = length
         self.color : tuple[int, int, int] = color
         self.name : str = name
@@ -43,7 +43,7 @@ class Snake:
         """
         Do nothing. Feel Free to override!
 
-        You could implement your own Detect for your move()
+        TODO: You could implement your own Detect for your move()
         """
         pass
 
@@ -86,6 +86,8 @@ class Snake:
     def grow(self) -> None:
         """
         Increase the length of the snake by 1.
+
+        ONLY call this method when you are testing your snake in the main()
         """
         self.length += 1
         # No need to modify body_positions as the tail will naturally grow with subsequent moves
@@ -102,6 +104,8 @@ class Snake:
         """
         Check for collisions with the boundaries or itself.
 
+        DO NOT USE this method to write your _checkCollision()!!! The requirements are different.
+
         :return: True if a collision is detected, False otherwise.
         """
         head = self.body_positions[0]
@@ -115,6 +119,9 @@ class Snake:
 
     @final # We'll fire you if you override this method.
     def check_body(self) -> None:
+        """
+        Check if the body is still alive and remove the dead segments.
+        """
         for i in range(1, len(self.body_positions)):
             x, y, hp = self.body_positions[i]
             if hp < 1:
