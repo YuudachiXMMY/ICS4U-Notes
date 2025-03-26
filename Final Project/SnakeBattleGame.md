@@ -29,11 +29,11 @@ You will use the given code `snake.py` to inherit your own snake and battle with
 
 - `:MATRIX_SIZE: tuple[int, int]` : map/matrix size
 
-- `:body_positions: tuple[int, int, int]` : body positions of your snake
+- `:body_positions: list[tuple[int, int, int]]` : body positions of your snake
+
+- `:name: str` : name of your snake
 
 - `:color: tuple[int, int, int]`** : color of your snake
-
-- `:name: str`** : name of your snake
 
 - `:attack: int`** : attack of your snake
 

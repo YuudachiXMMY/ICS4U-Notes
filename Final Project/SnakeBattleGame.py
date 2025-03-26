@@ -1,4 +1,4 @@
-import sys
+import sys, os
 import pygame, random
 from snake import Snake
 from MySnakeTemplate import MySnakeTemplate
@@ -112,8 +112,12 @@ class Game:
         self.map = self.empty_map.copy()
         for i in range(len(self.snakes)):
             x, y, hp = self.snakes[i].body_positions[0]
-            if not ((0 <= x and x < self.m) and (0 <= y and x < self.n)):
+
+            # Avoiding Unexpected Errors
+            if 0 > x or x >= self.n or 0 > y or y >= self.m:
                 continue
+
+            self.map[y][x].append(hp)
             for j in range(len(self.snakes)):
                 if i == j:
                     continue
@@ -122,7 +126,6 @@ class Game:
                     if bx == x and by == y:
                         self.snakes[j].body_positions[k] = (bx, by, bhp-self.snakes[i].attack)
                         break
-            self.map[x][y].append(hp)
 
     def _updateMove(self):
         """Update the game state."""
@@ -144,6 +147,7 @@ class Game:
                     # self.draw_deads(self.snakes[i].name)
                     self.deads.append(self.snakes[i].name)
                     self.snakes.pop(i)
+                    i -= 1
                 i += 1
             except:
                 self._draw_errors(self.snakes[i].name)

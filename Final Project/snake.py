@@ -39,7 +39,7 @@ class Snake:
         self.hp : int = hp
 
     # You can feel free to override this method.
-    def detect(self, map : list[list[list[int, int, int]]]) -> None:
+    def detect(self, map : list[list[list[int]]]) -> None:
         """
         Do nothing. Feel Free to override!
 
@@ -57,7 +57,7 @@ class Snake:
         return self.length > 0
 
     @final # We'll fire you if you override this method.
-    def move(self, direction : list) -> list:
+    def move(self, direction : list[int, int]) -> list:
         """
         Move the snake in a specified direction. return False if the snake is disqualified or dead.
 

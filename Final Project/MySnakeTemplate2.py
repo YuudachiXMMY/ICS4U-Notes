@@ -33,7 +33,7 @@ class MySnakeTemplate2(Snake):
         direction = [[-1, 0], [1, 0], [0, -1], [0, 1]]
         direction = random.choice(direction)
 
-        return direction
+        return super().move(direction)
 
     # [OPTIONAL]
     def detect(self, map : list[list[list[int]]]) -> None:
