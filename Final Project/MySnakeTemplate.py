@@ -16,7 +16,7 @@ class MySnakeTemplate(Snake):
         1. `start_x`, `start_y` should be your assigned starting position, calculated due to Snake.MATRIX_SIZE.
         2. `length` + `attack` + `hp` should be added up to a maximum of 200; otherwise, the snake will be disqualified and removed from the game.
         '''
-        start_x, start_y = (15, 15)
+        start_x, start_y = (1, 1)
         color = (255,0,0)
         name = __name__
         length = 150
@@ -92,3 +92,4 @@ def main():
 
     snake.move()
     print(snake)
+    

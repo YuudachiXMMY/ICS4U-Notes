@@ -74,8 +74,8 @@ class Snake:
             self.length -= 1
             del self.body_positions[0]
 
-            if not self.qualification or self.isDead():
-                return None
+        if not self.qualification or self.isDead():
+            return None
 
         # Insert the new head and remove the last segment if the length remains the same
         self.body_positions = [new_head] + self.body_positions[:self.length - 1]
@@ -108,12 +108,15 @@ class Snake:
 
         :return: True if a collision is detected, False otherwise.
         """
-        head = self.body_positions[0]
+        if self.length < 1:
+            return False
+        bodies = [[x,y] for x,y,hp in self.body_positions]
+        head = bodies[0]
         # Check for boundary collision
         if not (0 <= head[0] < Snake.MATRIX_SIZE[0] and 0 <= head[1] < Snake.MATRIX_SIZE[1]):
             return True
         # Check for self-collision
-        if head in self.body_positions[1:]:
+        if self.length > 1 and head in bodies[1:]:
             return True
         return False
 
@@ -128,6 +131,8 @@ class Snake:
                 self.body_positions = self.body_positions[:i]
                 self.length = i
                 break
+        if len(self.body_positions) < 1:
+            self.length = 0
 
     @final # We'll fire you if you override this method.
     def __str__(self):
@@ -141,4 +146,4 @@ class Snake:
         """
         String representation of the snake for debugging.
         """
-        return f"Snake(length={self.length}, body_positions={self.body_positions})"
+        return f"Snake({self.name}, {self.color}, {self.hp}, {self.attack}, {self.length}, {self.body_positions})"

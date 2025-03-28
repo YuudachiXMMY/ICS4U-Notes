@@ -111,6 +111,8 @@ class Game:
         """Update the map with snakes' body_positions."""
         self.map = self.empty_map.copy()
         for i in range(len(self.snakes)):
+            if len(self.snakes[i].body_positions) < 1:
+                continue
             x, y, hp = self.snakes[i].body_positions[0]
 
             # Avoiding Unexpected Errors
