@@ -119,7 +119,7 @@ class Game:
             if 0 > x or x >= self.n or 0 > y or y >= self.m:
                 continue
 
-            self.map[y][x].append(hp)
+            self.map[x][y].append(hp)
             for j in range(len(self.snakes)):
                 if i == j:
                     continue
