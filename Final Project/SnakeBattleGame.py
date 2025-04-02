@@ -1,7 +1,6 @@
 import sys, os
 import pygame, random
 from snake import Snake
-from MySnakeTemplate import MySnakeTemplate
 
 '''
 Game Loop:
@@ -27,6 +26,8 @@ class Game:
     MESSAGE_SIZE = 24
     ERROR_SIZE = 24
 
+    MARGIN_SIZE = 24
+
 
     def __init__(self, snakes : list, w : int = 800, m : int = 15, n : int = 10, Caption : str = 'Battle Grid'):
         """Initialize Game object."""
@@ -48,7 +49,7 @@ class Game:
         self.HEIGHT : int = n * self.cell_size
 
         # GUI setup
-        self.screen : pygame.Surface = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
+        self.screen : pygame.Surface = pygame.display.set_mode((self.WIDTH + self.MARGIN_SIZE*2, self.HEIGHT + self.MARGIN_SIZE*2))
         self.caption = pygame.display.set_caption(Caption)
         self.title : pygame.font.Font = pygame.font.SysFont(None, Game.TITLE_SIZE)
         self.hp : pygame.font.Font = pygame.font.SysFont(None, Game.HP_SIZE)
@@ -61,6 +62,9 @@ class Game:
         self.clock = None
         self.running : bool = False
 
+        # Hotkey setup
+        self.paused = False # Game pause
+
     def start(self):
         """Start the game loop."""
         self.clock = pygame.time.Clock()
@@ -71,11 +75,23 @@ class Game:
                 if event.type == pygame.QUIT:
                     self.running = False
 
-            end = self.check_end()
-            if not end:
-                self.update()
-            else:
-                self.draw_ending()
+                # Pause/Unpause when "P" is pressed
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_p:
+                        self.paused = not self.paused
+
+                # If the game is paused, display a message
+                if self.paused:
+                    text = self.title.render("Game Paused - Press P to Resume", True, Game.RED)
+                    text_rect = text.get_rect(center=(self.WIDTH/2, self.HEIGHT/2))
+                    self.screen.blit(text, text_rect)
+
+            if not self.paused:
+                end = self.check_end()
+                if not end:
+                    self.update()
+                else:
+                    self.draw_ending()
 
             pygame.display.flip()
             self.clock.tick(30)  # Limit to 30 frames per second
@@ -94,7 +110,7 @@ class Game:
                 self.draw_snake(snake)
 
             self.last_update_time = pygame.time.get_ticks()
-
+        
     def exit(self):
         """Exit game."""
         pygame.quit()
@@ -176,9 +192,9 @@ class Game:
         """Draw the grid on the screen."""
         self.screen.fill(Game.SCREEN_COLOR)
         for row in range(self.n + 1):
-            pygame.draw.line(self.screen, Game.LINE_COLOR, (0, row * self.cell_size), (self.WIDTH, row * self.cell_size))
+            pygame.draw.line(self.screen, Game.LINE_COLOR, (0 + self.MARGIN_SIZE, row * self.cell_size + self.MARGIN_SIZE), (self.WIDTH + self.MARGIN_SIZE, row * self.cell_size + self.MARGIN_SIZE))
         for col in range(self.m + 1):
-            pygame.draw.line(self.screen, Game.LINE_COLOR, (col * self.cell_size, 0), (col * self.cell_size, self.HEIGHT))
+            pygame.draw.line(self.screen, Game.LINE_COLOR, (col * self.cell_size + self.MARGIN_SIZE, 0 + self.MARGIN_SIZE), (col * self.cell_size + self.MARGIN_SIZE, self.HEIGHT + self.MARGIN_SIZE))
 
     def draw_snake(self, snake : Snake):
         deep = 0.5
@@ -190,9 +206,9 @@ class Game:
             x, y, hp = body
             if hp < 1:
                 break
-            pygame.draw.rect(self.screen, color, (x * self.cell_size, y * self.cell_size, self.cell_size, self.cell_size))
+            pygame.draw.rect(self.screen, color, (x * self.cell_size + self.MARGIN_SIZE, y * self.cell_size + self.MARGIN_SIZE, self.cell_size, self.cell_size))
             text = self.message.render(str(hp), True, Game.BLACK)
-            self.screen.blit(text, (x * self.cell_size, y * self.cell_size, self.cell_size, self.cell_size))
+            self.screen.blit(text, (x * self.cell_size + self.MARGIN_SIZE, y * self.cell_size + self.MARGIN_SIZE, self.cell_size, self.cell_size))
 
     def _draw_errors(self, name):
         """Show who got Error Message"""
@@ -220,3 +236,4 @@ class Game:
         text = self.title.render(txt, True, Game.RED)
         text_rect = text.get_rect(center=(self.WIDTH/2, self.HEIGHT/2))
         self.screen.blit(text, text_rect)
+    
