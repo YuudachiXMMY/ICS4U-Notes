@@ -11,7 +11,7 @@ class MySnakeTemplate(Snake):
     def __init__(self):
         ''' TODO:
         Construct your snake
-        
+
         NOTE:
         1. `start_x`, `start_y` should be your assigned starting position, calculated due to Snake.MATRIX_SIZE.
         2. `length` + `attack` + `hp` should be added up to a maximum of 200; otherwise, the snake will be disqualified and removed from the game.
@@ -27,7 +27,7 @@ class MySnakeTemplate(Snake):
     def move(self) -> list[int, int]:
         ''' TODO:
         Write your own find next moving direction logic
-        
+
         :return: the direction of the next move.
         '''
         direction = [[-1, 0], [1, 0], [0, -1], [0, 1]]
@@ -39,7 +39,7 @@ class MySnakeTemplate(Snake):
     def detect(self, map : list[list[list[int]]]) -> None:
         ''' TODO:
         You can utilize the detect feature called every round to store any value that's helpfull for your move() direction logic
-        
+
         NOTE:
         1. ONLY allow to have a MAXIMUM runtine of 1 second!
         2. STORE any information as ATTRIBUTES.
@@ -92,4 +92,3 @@ def main():
 
     snake.move()
     print(snake)
-    
